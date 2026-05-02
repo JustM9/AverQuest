@@ -1,4 +1,4 @@
-# Результаты сборки и компиляции (ОБЯЗАТЕЛЬНО)
+.idea/
 build/
 out/
 *.o
@@ -7,7 +7,7 @@ out/
 *.out
 *.app
 
-# Файлы, которые генерирует CMake
+
 CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
@@ -15,21 +15,6 @@ Makefile
 compile_commands.json
 CMakeUserPresets.json
 
-# Папки и файлы Visual Studio (если ты в Windows)
-.vs/
-x64/
-Debug/
-Release/
-*.sln
-*.vcxproj
-*.vcxproj.filters
-*.user
-
-# Файлы VS Code
-.vscode/
-*.code-workspace
-
-# Системный мусор (логи, кэш ОС)
 .DS_Store
 Thumbs.db
 *.log
