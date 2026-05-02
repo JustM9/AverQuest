@@ -1,69 +1,36 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
+# Результаты сборки и компиляции (ОБЯЗАТЕЛЬНО)
+build/
+out/
 *.o
 *.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Linker files
-*.ilk
-
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-*.so.*
-
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
 *.exe
 *.out
 *.app
 
-# Build directories
-build/
-Build/
-build-*/
-
-# CMake generated files
-CMakeFiles/
+# Файлы, которые генерирует CMake
 CMakeCache.txt
+CMakeFiles/
 cmake_install.cmake
 Makefile
-install_manifest.txt
 compile_commands.json
+CMakeUserPresets.json
 
-# Temporary files
-*.tmp
+# Папки и файлы Visual Studio (если ты в Windows)
+.vs/
+x64/
+Debug/
+Release/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.user
+
+# Файлы VS Code
+.vscode/
+*.code-workspace
+
+# Системный мусор (логи, кэш ОС)
+.DS_Store
+Thumbs.db
 *.log
-*.bak
-*.swp
-
-# vcpkg
-vcpkg_installed/
-
-# debug information files
-*.dwo
-
-# test output & cache
-Testing/
-.cache/
+*.tmp
