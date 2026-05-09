@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include <windows.h>
 
 using namespace std;
@@ -8,6 +9,7 @@ using namespace std;
 class Location {
 public:
     string name;
+    vector <string> items;
     string description;
     string exitNorth;
     string exitSouth;
@@ -43,12 +45,32 @@ public:
         if (direction == "восток") return exitEast;
         return "";
     }
+    void addItem(string item) {
+        items.push_back(item);
+    }
 };
 
 // =============== ИГРОК ===============
 class Player {
 public:
     string currentLocation;
+    vector<string> inventory;
+
+    void showInv() {
+        if (inventory.size() == 0) cout<< "Инвентарь пуст.\n";
+        else {
+            cout << "У вас есть: ";
+            for (int i = 0;i<inventory.size();i++) {
+                string temp = inventory[i];
+                cout << temp;
+                if ( (i+1) != inventory.size()) cout << ",";
+            }
+            cout<<endl;
+        }
+    }
+    void takeItem(string item) {
+        inventory.push_back(item);
+    }
 };
 
 // =============== ИГРА ===============
@@ -63,6 +85,7 @@ public:
     Game() {
         // ЛЕС
         forest.name = "Лесная поляна";
+        forest.addItem("Мохнатое кольцо");
         forest.description = "Ты стоишь на поляне. Вокруг деревья.";
         forest.exitNorth = "cave";
         forest.exitSouth = "";
@@ -89,10 +112,6 @@ public:
     }
 
     void start() {
-        cout << "========================================\n";
-        cout << "==         ТЕКСТОВЫЙ КВЕСТ           ==\n";
-        cout << "========================================\n";
-        cout << "Команды: север, юг, запад, восток, оглядеть, выход\n\n";
 
         string command;
 
@@ -118,7 +137,7 @@ public:
                     cout << "На тебя пристально смотрят птицы. Больше ничего необычного." << endl;
                 }
                 else if (player.currentLocation == "cave") {
-                    cout<< "В углу видны кости. Что бы тут не жило, оно уже мертво"<<endl;
+                    cout<< "В углу видны кости и рваная одежда. Что бы тут не жило, оно уже мертво"<<endl;
                 }
                 else if (player.currentLocation == "river") {
                     cout << "Ничего необычного"<<endl;
@@ -129,8 +148,19 @@ public:
             else if (command == "север" || command == "юг" || command == "запад" || command == "восток") {
                 go(command);
             }
+            else if (command.substr(0,5) == "взять") {
+                string temp = command.substr(7);
+                player.takeItem(temp);
+
+            }
+            else if (command == "инвентарь" || command == "инв" || command == "и") {
+                player.showInv();
+            }
+            else if (command == "команды"){
+                cout << "Команды: север, юг, запад, восток, инвентарь, оглядеть, выход\n";
+            }
             else {
-                cout << "Не понял. Команды: север, юг, запад, восток, осмотреться, выход\n";
+                cout<<" Не правильная команда.\n ";
             }
         }
     }
@@ -147,10 +177,8 @@ private:
         Location* loc = getCurrentLocation();
         if (loc != nullptr) {
             loc->show();
-        }
-    }
-    void showDesc2() {
 
+        }
     }
 
     void go(string direction) {
@@ -174,7 +202,30 @@ private:
 int main() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
+    cout << R"(
+=========================================
+           .-:::::::::::::::::.
+           :-     ..::..     :-
+           :-     :+.++=:    :-
+           --  .=:+*.+=-+    ::
+           -:  .--#=-*-=*    :-
+           -:   :=+-+-*+#.   --
+           -:   :+-:::==#.   --
+            =.   .+--.=*:    +
+            .-: .--=+=++=. .-.
+            ..:-:  ... :-::.
+                .::::::..
+=========================================
+    ДОБРО ПОЖАЛОВАТЬ В ТЕКСТОВЫЙ КВЕСТ
+=========================================
+Напиши 'играть', чтобы начать.
+)" << endl;
+
     Game game;
-    game.start();
+    string command;
+    getline(cin, command);
+    if (command == "играть") {
+        game.start();
+    }
     return 0;
 }
