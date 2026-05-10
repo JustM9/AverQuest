@@ -10,7 +10,7 @@ using namespace std;
 class Location {
 public:
     string name;
-    vector <string> items = {"мохнатое кольцо"};
+    vector <string> items;
     string description;
     string exitNorth;
     string exitSouth;
@@ -102,6 +102,7 @@ public:
     Game() {
         // ЛЕС
         forest.name = "Лесная поляна";
+        forest.addItem("мохнатое кольцо");
         forest.description = "Ты стоишь на поляне. Вокруг деревья.";
         forest.exitNorth = "cave";
         forest.exitSouth = "";
