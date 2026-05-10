@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <windows.h>
+#include <sstream>
 
 using namespace std;
 
@@ -9,7 +10,7 @@ using namespace std;
 class Location {
 public:
     string name;
-    vector <string> items;
+    vector <string> items = {"мохнатое кольцо"};
     string description;
     string exitNorth;
     string exitSouth;
@@ -48,6 +49,22 @@ public:
     void addItem(string item) {
         items.push_back(item);
     }
+    void delItem(string item) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items[i] == item) {
+                items.erase(items.begin() + i);
+                break;
+            }
+        }
+    }
+    bool hasItem(string item) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items[i] == item) {
+                return true;
+            }
+        }
+        return false;
+    }
 };
 
 // =============== ИГРОК ===============
@@ -85,7 +102,6 @@ public:
     Game() {
         // ЛЕС
         forest.name = "Лесная поляна";
-        forest.addItem("Мохнатое кольцо");
         forest.description = "Ты стоишь на поляне. Вокруг деревья.";
         forest.exitNorth = "cave";
         forest.exitSouth = "";
@@ -114,19 +130,18 @@ public:
     void start() {
 
         string command;
-
+        //state машина
         while (true) {
-            // Показываем текущую локацию
+
             showCurrentLocation();
 
             cout << "> ";
             getline(cin, command);
 
-            // Переводим в нижний регистр
+
             for (int i = 0; i < command.length(); i++) {
                 command[i] = tolower(command[i]);
             }
-
             if (command == "выход") {
                 cout << "До свидания!\n";
                 break;
@@ -148,11 +163,26 @@ public:
             else if (command == "север" || command == "юг" || command == "запад" || command == "восток") {
                 go(command);
             }
-            else if (command.substr(0,5) == "взять") {
-                string temp = command.substr(7);
-                player.takeItem(temp);
+
+            else if (command.rfind("взять",0) == 0) {
+                stringstream ss(command);
+                string com;
+                ss>>com;
+                string itemName;
+                getline(ss,itemName);
+                if (!itemName.empty() && itemName[0] == ' ') {
+                    itemName.erase(0, 1);
+                }
+                Location* loc = getCurrentLocation();
+                if (loc->hasItem(itemName) == true) {
+                    player.takeItem(itemName);
+                    loc->delItem(itemName);
+                    cout << "Вы подобрали: "<< itemName <<endl;
+                }
+                else{ cout<<"Такого предмета здесь нет."<<endl;}
 
             }
+
             else if (command == "инвентарь" || command == "инв" || command == "и") {
                 player.showInv();
             }
