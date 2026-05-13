@@ -88,6 +88,22 @@ public:
     void takeItem(string item) {
         inventory.push_back(item);
     }
+    bool hasItem(string itemName) {
+        bool flag = false;
+        for (int i =0;i<inventory.size();i++) {
+            if (itemName == inventory[i]) {
+                flag = true;
+            }
+            if (flag) {
+                return true;
+                break;
+            }
+        }
+        if (!flag) {
+            return false;
+        }
+
+    }
 };
 
 // =============== ИГРА ===============
@@ -103,6 +119,7 @@ public:
         // ЛЕС
         forest.name = "Лесная поляна";
         forest.addItem("мохнатое кольцо");
+        forest.addItem("ржавый ключ");
         forest.description = "Ты стоишь на поляне. Вокруг деревья.";
         forest.exitNorth = "cave";
         forest.exitSouth = "";
@@ -134,7 +151,7 @@ public:
         //state машина
         while (true) {
 
-            showCurrentLocation();
+
 
             cout << "> ";
             getline(cin, command);
@@ -147,19 +164,8 @@ public:
                 cout << "До свидания!\n";
                 break;
             }
-            else if (command == "оглядеть") {
-                cout<< "====================="<<endl;
-                if (player.currentLocation == "forest") {
-                    cout << "На тебя пристально смотрят птицы. Больше ничего необычного." << endl;
-                }
-                else if (player.currentLocation == "cave") {
-                    cout<< "В углу видны кости и рваная одежда. Что бы тут не жило, оно уже мертво"<<endl;
-                }
-                else if (player.currentLocation == "river") {
-                    cout << "Ничего необычного"<<endl;
-                }
-                cout<< "====================="<<endl;
-
+            else if (command == "осмотреться") {
+                showCurrentLocation();
             }
             else if (command == "север" || command == "юг" || command == "запад" || command == "восток") {
                 go(command);
@@ -184,11 +190,30 @@ public:
 
             }
 
-            else if (command == "инвентарь" || command == "инв" || command == "и") {
+            else if (command == "инвентарь" || command == "инв") {
                 player.showInv();
             }
-            else if (command == "команды"){
+            else if (command == "помощь"){
                 cout << "Команды: север, юг, запад, восток, инвентарь, оглядеть, выход\n";
+            }
+            else if (command.rfind("осмотреть",0) == 0) {
+                stringstream ss(command);
+                string com;
+                ss>>com;
+                string itemName;
+                getline(ss,itemName);
+                if (!itemName.empty() && itemName[0] == ' ') {
+                    itemName.erase(0, 1);
+                }
+                if (player.hasItem(itemName) == true) {
+                    if (itemName == "мохнатое кольцо") {
+                        cout << "Кольцо, сплетённое из чьих-то волос. Тёплое на ощупь. Если поднести его к уху — слышен едва уловимый шёпот."<<endl;
+                    }
+                    else {
+                        cout << "Ничего необычного."<<endl;
+                    }
+                }
+                else {cout << "Такого предмета нет."<<endl;}
             }
             else {
                 cout<<" Не правильная команда.\n ";
@@ -241,22 +266,24 @@ int main() {
            --  .=:+*.+=-+    ::
            -:  .--#=-*-=*    :-
            -:   :=+-+-*+#.   --
-           -:   :+-:::==#.   --
-            =.   .+--.=*:    +
             .-: .--=+=++=. .-.
             ..:-:  ... :-::.
                 .::::::..
 =========================================
     ДОБРО ПОЖАЛОВАТЬ В ТЕКСТОВЫЙ КВЕСТ
 =========================================
-Напиши 'играть', чтобы начать.
+Нажмите Enter чтобы продолжить...
 )" << endl;
-
+    cin.ignore();
     Game game;
-    string command;
-    getline(cin, command);
-    if (command == "играть") {
-        game.start();
-    }
+    cout<<R"(
+Ты просыпаешься в незнакомом лесу. Голова гудит, одежда порвана.
+Последнее, что ты помнишь — яркая вспышка.
+Теперь нужно выбраться и понять, что произошло.
+
+Нажмите Enter чтобы продолжить...
+        )" << endl;
+    cin.ignore();
+    game.start();
     return 0;
 }
