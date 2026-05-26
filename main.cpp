@@ -111,6 +111,7 @@ class Game {
 private:
     Location forest;
     Location cave;
+    Location deep_cave;
     Location river;
     Player player;
 
@@ -128,11 +129,18 @@ public:
 
         // ПЕЩЕРА
         cave.name = "Тёмная пещера";
-        cave.description = "Здесь холодно и темно. Слышно, как капает вода.";
+        cave.description = "Здесь холодно и темно.";
         cave.exitNorth = "";
         cave.exitSouth = "forest";
         cave.exitWest = "";
         cave.exitEast = "";
+
+        deep_cave.name = "Глубь пещеры";
+        deep_cave.description = "Здесь почти ничего не видно. Слышен шум капающей воды. В самом углу виднеется какая то тень. Это человек.";
+        deep_cave.exitNorth = "";
+        deep_cave.exitSouth = "";
+        deep_cave.exitWest = "";
+        deep_cave.exitEast = "";
 
         // РЕКА
         river.name = "Берег реки";
@@ -151,8 +159,6 @@ public:
         //state машина
         while (true) {
 
-
-
             cout << "> ";
             getline(cin, command);
 
@@ -167,10 +173,24 @@ public:
             else if (command == "осмотреться") {
                 showCurrentLocation();
             }
-            else if (command == "север" || command == "юг" || command == "запад" || command == "восток") {
-                go(command);
+            else if (command.rfind("идти",0) == 0) {
+                stringstream ss(command);
+                string com;
+                ss>>com;
+                string exit;
+                getline(ss,exit);
+                if (!exit.empty() && exit[0] == ' ') {
+                    exit.erase(0, 1);
+                }
+                if (exit == "север" || exit == "юг" || exit == "запад" || exit == "восток") {
+                    go(exit);
+                    showCurrentLocation();
+                }
+                else if (exit == "вглубь" && player.currentLocation == "cave") {
+                    player.currentLocation = "deep_cave";
+                }
+                else {cout << "Неправильная команда\n";}
             }
-
             else if (command.rfind("взять",0) == 0) {
                 stringstream ss(command);
                 string com;
@@ -215,6 +235,46 @@ public:
                 }
                 else {cout << "Такого предмета нет."<<endl;}
             }
+            //deep_cave part
+            else if (player.currentLocation == "deep_cave") {
+                if (command=="выйти") {
+                    player.currentLocation = "cave";
+                }
+                else if (command == "поговорить") {
+                    cout << "Вы произносите: \'Эй, у вас всё порядке?\'"<<endl; cin.ignore();
+                    cout<< "Высокый, тощий мужчина подходит к вам"<<endl; cin.ignore();
+                    cout << "Вы разглядываете лицо этого человека"<<endl; cin.ignore();
+                    cout << "Он явно на грани безумия"; cin.ignore();
+                    cout << "\'Оно...  Оно там?\' - многозначительно спросил этот безумец"<<endl; cin.ignore();
+                    string ans;
+                    cout << "1: Да   2: Нет"<<endl;
+                    cin >> ans;
+                    if (ans == "1" || ans == "Да" || ans == "да") {
+                        cout << "На его лице застыла гримаса ужаса."<<endl; cin.ignore();
+                        cout << "Безумец резко толкает тебя и убегает"<<endl; cin.ignore();
+                        cout << "Толчок был слабым. Безумца нигде не видно"<<endl;
+                        continue;
+                    }
+                    else if (ans == "2" || ans == "Нет") {
+                        cout << "Напряжение на его лице заметно спало"<<endl; cin.ignore();
+                        cout << "\'Кольцо... Я потерял кольцо где то в лесу... Оно идёт за мной, ему нужен Я. Оно меня найдет\' - тихо прошептал безумец."<<endl; cin.ignore();
+                        cout << "Человек снова вжался в угол пещеры и пристально смотрел то на меня, то на проход позади."; cin.ignore();
+                        string ans1;
+
+                        cout << "1.Вы знаете что это за место? 2.Уйти"<<endl;
+                        cin >> ans1;
+                        if (ans1 == "1") {
+                            cout << "Безумец:\'Гамленская долина\'"<<endl; cin.ignore();
+                        }
+                        else if (ans1 == "2") {
+                            player.currentLocation = "cave";
+                            continue;
+                        }
+                    }
+
+
+                }
+            }
             else {
                 cout<<" Не правильная команда.\n ";
             }
@@ -226,6 +286,7 @@ private:
         if (player.currentLocation == "forest") return &forest;
         if (player.currentLocation == "cave") return &cave;
         if (player.currentLocation == "river") return &river;
+        if (player.currentLocation == "deep_cave") return &deep_cave;
         return nullptr;
     }
 
@@ -260,16 +321,6 @@ int main() {
     SetConsoleOutputCP(1251);
     cout << R"(
 =========================================
-           .-:::::::::::::::::.
-           :-     ..::..     :-
-           :-     :+.++=:    :-
-           --  .=:+*.+=-+    ::
-           -:  .--#=-*-=*    :-
-           -:   :=+-+-*+#.   --
-            .-: .--=+=++=. .-.
-            ..:-:  ... :-::.
-                .::::::..
-=========================================
     ДОБРО ПОЖАЛОВАТЬ В ТЕКСТОВЫЙ КВЕСТ
 =========================================
 Нажмите Enter чтобы продолжить...
@@ -282,7 +333,7 @@ int main() {
 Теперь нужно выбраться и понять, что произошло.
 
 Нажмите Enter чтобы продолжить...
-        )" << endl;
+        )";
     cin.ignore();
     game.start();
     return 0;
