@@ -3,4 +3,5 @@ project(TextQuest)
 
 set(CMAKE_CXX_STANDARD 20)
 
+
 add_executable(TextQuest main.cpp)
