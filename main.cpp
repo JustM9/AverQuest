@@ -7,7 +7,7 @@
 
 using namespace std;
 
-// =============== ЛОКАЦИЯ ===============
+// =============== Р›РћРљРђР¦РРЇ ===============
 class Location {
 public:
     string name;
@@ -21,30 +21,30 @@ public:
     void show() {
         cout << "\n=== " << name << " ===\n";
         cout << description << "\n";
-        cout << "Можно идти: ";
+        cout << "РњРѕР¶РЅРѕ РёРґС‚Рё: ";
 
-        if (exitNorth != "") cout << "север ";
-        if (exitSouth != "") cout << "юг ";
-        if (exitWest != "") cout << "запад ";
-        if (exitEast != "") cout << "восток ";
+        if (exitNorth != "") cout << "СЃРµРІРµСЂ ";
+        if (exitSouth != "") cout << "СЋРі ";
+        if (exitWest != "") cout << "Р·Р°РїР°Рґ ";
+        if (exitEast != "") cout << "РІРѕСЃС‚РѕРє ";
 
         cout << "\n";
         cout<< "====================="<<endl;
     }
 
     bool canGo(string direction) {
-        if (direction == "север" && exitNorth != "") return true;
-        if (direction == "юг" && exitSouth != "") return true;
-        if (direction == "запад" && exitWest != "") return true;
-        if (direction == "восток" && exitEast != "") return true;
+        if (direction == "СЃРµРІРµСЂ" && exitNorth != "") return true;
+        if (direction == "СЋРі" && exitSouth != "") return true;
+        if (direction == "Р·Р°РїР°Рґ" && exitWest != "") return true;
+        if (direction == "РІРѕСЃС‚РѕРє" && exitEast != "") return true;
         return false;
     }
 
     string getExit(string direction) {
-        if (direction == "север") return exitNorth;
-        if (direction == "юг") return exitSouth;
-        if (direction == "запад") return exitWest;
-        if (direction == "восток") return exitEast;
+        if (direction == "СЃРµРІРµСЂ") return exitNorth;
+        if (direction == "СЋРі") return exitSouth;
+        if (direction == "Р·Р°РїР°Рґ") return exitWest;
+        if (direction == "РІРѕСЃС‚РѕРє") return exitEast;
         return "";
     }
     void addItem(string item) {
@@ -68,16 +68,16 @@ public:
     }
 };
 
-// =============== ИГРОК ===============
+// =============== РР“Р РћРљ ===============
 class Player {
 public:
     string currentLocation;
     vector<string> inventory;
 
     void showInv() {
-        if (inventory.size() == 0) cout<< "Инвентарь пуст.\n";
+        if (inventory.size() == 0) cout<< "РРЅРІРµРЅС‚Р°СЂСЊ РїСѓСЃС‚.\n";
         else {
-            cout << "У вас есть: ";
+            cout << "РЈ РІР°СЃ РµСЃС‚СЊ: ";
             for (int i = 0;i<inventory.size();i++) {
                 string temp = inventory[i];
                 cout << temp;
@@ -101,7 +101,7 @@ public:
     }
 };
 
-// =============== ИГРА ===============
+// =============== РР“Р Рђ ===============
 class Game {
 private:
     Location forest;
@@ -112,34 +112,34 @@ private:
 
 public:
     Game() {
-        // ЛЕС
-        forest.name = "Лесная поляна";
-        forest.addItem("мохнатое кольцо");
-        forest.addItem("ржавый ключ");
-        forest.description = "Ты стоишь на поляне. Вокруг деревья.";
+        // Р›Р•РЎ
+        forest.name = "Р›РµСЃРЅР°СЏ РїРѕР»СЏРЅР°";
+        forest.addItem("РјРѕС…РЅР°С‚РѕРµ РєРѕР»СЊС†Рѕ");
+        forest.addItem("СЂР¶Р°РІС‹Р№ РєР»СЋС‡");
+        forest.description = "РўС‹ СЃС‚РѕРёС€СЊ РЅР° РїРѕР»СЏРЅРµ. Р’РѕРєСЂСѓРі РґРµСЂРµРІСЊСЏ.";
         forest.exitNorth = "cave";
         forest.exitSouth = "";
         forest.exitWest = "";
         forest.exitEast = "river";
 
-        // ПЕЩЕРА
-        cave.name = "Тёмная пещера";
-        cave.description = "Здесь холодно и темно.";
+        // РџР•Р©Р•Р Рђ
+        cave.name = "РўС‘РјРЅР°СЏ РїРµС‰РµСЂР°";
+        cave.description = "Р—РґРµСЃСЊ С…РѕР»РѕРґРЅРѕ Рё С‚РµРјРЅРѕ.";
         cave.exitNorth = "";
         cave.exitSouth = "forest";
         cave.exitWest = "";
         cave.exitEast = "";
 
-        deep_cave.name = "Глубь пещеры";
-        deep_cave.description = "Здесь почти ничего не видно. Слышен шум капающей воды. В самом углу виднеется какая то тень. Это человек.";
+        deep_cave.name = "Р“Р»СѓР±СЊ РїРµС‰РµСЂС‹";
+        deep_cave.description = "Р—РґРµСЃСЊ РїРѕС‡С‚Рё РЅРёС‡РµРіРѕ РЅРµ РІРёРґРЅРѕ. РЎР»С‹С€РµРЅ С€СѓРј РєР°РїР°СЋС‰РµР№ РІРѕРґС‹. Р’ СЃР°РјРѕРј СѓРіР»Сѓ РІРёРґРЅРµРµС‚СЃСЏ РєР°РєР°СЏ С‚Рѕ С‚РµРЅСЊ. Р­С‚Рѕ С‡РµР»РѕРІРµРє.";
         deep_cave.exitNorth = "";
         deep_cave.exitSouth = "";
         deep_cave.exitWest = "";
         deep_cave.exitEast = "";
 
-        // РЕКА
-        river.name = "Берег реки";
-        river.description = "Ты у реки. Вода прозрачная, видно камни на дне.";
+        // Р Р•РљРђ
+        river.name = "Р‘РµСЂРµРі СЂРµРєРё";
+        river.description = "РўС‹ Сѓ СЂРµРєРё. Р’РѕРґР° РїСЂРѕР·СЂР°С‡РЅР°СЏ, РІРёРґРЅРѕ РєР°РјРЅРё РЅР° РґРЅРµ.";
         river.exitNorth = "";
         river.exitSouth = "";
         river.exitWest = "forest";
@@ -151,7 +151,7 @@ public:
     void start() {
 
         string command;
-        //state машина
+        //state РјР°С€РёРЅР°
         while (true) {
 
             cout << "> ";
@@ -161,14 +161,14 @@ public:
             for (int i = 0; i < command.length(); i++) {
                 command[i] = tolower(command[i]);
             }
-            if (command == "выход") {
-                cout << "До свидания!\n";
+            if (command == "РІС‹С…РѕРґ") {
+                cout << "Р”Рѕ СЃРІРёРґР°РЅРёСЏ!\n";
                 break;
             }
-            else if (command == "осмотреться") {
+            else if (command == "РѕСЃРјРѕС‚СЂРµС‚СЊСЃСЏ") {
                 showCurrentLocation();
             }
-            else if (command.rfind("идти",0) == 0) {
+            else if (command.rfind("РёРґС‚Рё",0) == 0) {
                 stringstream ss(command);
                 string com;
                 ss>>com;
@@ -177,16 +177,16 @@ public:
                 if (!exit.empty() && exit[0] == ' ') {
                     exit.erase(0, 1);
                 }
-                if (exit == "север" || exit == "юг" || exit == "запад" || exit == "восток") {
+                if (exit == "СЃРµРІРµСЂ" || exit == "СЋРі" || exit == "Р·Р°РїР°Рґ" || exit == "РІРѕСЃС‚РѕРє") {
                     go(exit);
                     showCurrentLocation();
                 }
-                else if (exit == "вглубь" && player.currentLocation == "cave") {
+                else if (exit == "РІРіР»СѓР±СЊ" && player.currentLocation == "cave") {
                     player.currentLocation = "deep_cave";
                 }
-                else {cout << "Неправильная команда\n";}
+                else {cout << "РќРµРїСЂР°РІРёР»СЊРЅР°СЏ РєРѕРјР°РЅРґР°\n";}
             }
-            else if (command.rfind("взять",0) == 0) {
+            else if (command.rfind("РІР·СЏС‚СЊ",0) == 0) {
                 stringstream ss(command);
                 string com;
                 ss>>com;
@@ -199,19 +199,19 @@ public:
                 if (loc->hasItem(itemName) == true) {
                     player.takeItem(itemName);
                     loc->delItem(itemName);
-                    cout << "Вы подобрали: "<< itemName <<endl;
+                    cout << "Р’С‹ РїРѕРґРѕР±СЂР°Р»Рё: "<< itemName <<endl;
                 }
-                else{ cout<<"Такого предмета здесь нет."<<endl;}
+                else{ cout<<"РўР°РєРѕРіРѕ РїСЂРµРґРјРµС‚Р° Р·РґРµСЃСЊ РЅРµС‚."<<endl;}
 
             }
 
-            else if (command == "инвентарь" || command == "инв") {
+            else if (command == "РёРЅРІРµРЅС‚Р°СЂСЊ" || command == "РёРЅРІ") {
                 player.showInv();
             }
-            else if (command == "помощь"){
-                cout << "В этих местах даже бог не поможет\n";
+            else if (command == "РїРѕРјРѕС‰СЊ"){
+                cout << "Р’ СЌС‚РёС… РјРµСЃС‚Р°С… РґР°Р¶Рµ Р±РѕРі РЅРµ РїРѕРјРѕР¶РµС‚\n";
             }
-            else if (command.rfind("осмотреть",0) == 0) {
+            else if (command.rfind("РѕСЃРјРѕС‚СЂРµС‚СЊ",0) == 0) {
                 stringstream ss(command);
                 string com;
                 ss>>com;
@@ -221,59 +221,59 @@ public:
                     itemName.erase(0, 1);
                 }
                 if (player.hasItem(itemName) == true) {
-                    if (itemName == "мохнатое кольцо") {
-                        cout << "Кольцо, сплетённое из чьих-то волос. Тёплое на ощупь. Если поднести его к уху — слышен едва уловимый шёпот."<<endl;
+                    if (itemName == "РјРѕС…РЅР°С‚РѕРµ РєРѕР»СЊС†Рѕ") {
+                        cout << "РљРѕР»СЊС†Рѕ, СЃРїР»РµС‚С‘РЅРЅРѕРµ РёР· С‡СЊРёС…-С‚Рѕ РІРѕР»РѕСЃ. РўС‘РїР»РѕРµ РЅР° РѕС‰СѓРїСЊ. Р•СЃР»Рё РїРѕРґРЅРµСЃС‚Рё РµРіРѕ Рє СѓС…Сѓ вЂ” СЃР»С‹С€РµРЅ РµРґРІР° СѓР»РѕРІРёРјС‹Р№ С€С‘РїРѕС‚."<<endl;
                     }
-                    else if (itemName == "листок бумаги") {
-                        cout << "Листок бумаги с написанным текстом. Видимо это дневник Человека в углу. Текст гласит: ";cin.ignore();
-                        cout << "\"21.02 Моим скитаниям пришёл конец.\"";cin.ignore();
-                        cout << "\"Я нашёл заброшённую лачугу. Переночую в ней. Команта с кроватью довольно уютная.\""; cin.ignore();
-                        cout << "\"Правда эти картины с искажёнными лицами наводят жути.\""; cin.ignore();
-                        cout << "\"У меня осталось не так много еды, так что надо есть поменьше. Глаза слипаются, ложусь спать.\""; cin.ignore();
-                        cout << " На обратной стороне листка виднеется большая, размашистая надпись: ";cin.ignore();
-                        cout << "\"ЭТО БЫЛИ ОКНА\"";cin.ignore();
+                    else if (itemName == "Р»РёСЃС‚РѕРє Р±СѓРјР°РіРё") {
+                        cout << "Р›РёСЃС‚РѕРє Р±СѓРјР°РіРё СЃ РЅР°РїРёСЃР°РЅРЅС‹Рј С‚РµРєСЃС‚РѕРј. Р’РёРґРёРјРѕ СЌС‚Рѕ РґРЅРµРІРЅРёРє Р§РµР»РѕРІРµРєР° РІ СѓРіР»Сѓ. РўРµРєСЃС‚ РіР»Р°СЃРёС‚: ";cin.ignore();
+                        cout << "\"21.02 РњРѕРёРј СЃРєРёС‚Р°РЅРёСЏРј РїСЂРёС€С‘Р» РєРѕРЅРµС†.\"";cin.ignore();
+                        cout << "\"РЇ РЅР°С€С‘Р» Р·Р°Р±СЂРѕС€С‘РЅРЅСѓСЋ Р»Р°С‡СѓРіСѓ. РџРµСЂРµРЅРѕС‡СѓСЋ РІ РЅРµР№. РљРѕРјР°РЅС‚Р° СЃ РєСЂРѕРІР°С‚СЊСЋ РґРѕРІРѕР»СЊРЅРѕ СѓСЋС‚РЅР°СЏ.\""; cin.ignore();
+                        cout << "\"РџСЂР°РІРґР° СЌС‚Рё РєР°СЂС‚РёРЅС‹ СЃ РёСЃРєР°Р¶С‘РЅРЅС‹РјРё Р»РёС†Р°РјРё РЅР°РІРѕРґСЏС‚ Р¶СѓС‚Рё.\""; cin.ignore();
+                        cout << "\"РЈ РјРµРЅСЏ РѕСЃС‚Р°Р»РѕСЃСЊ РЅРµ С‚Р°Рє РјРЅРѕРіРѕ РµРґС‹, С‚Р°Рє С‡С‚Рѕ РЅР°РґРѕ РµСЃС‚СЊ РїРѕРјРµРЅСЊС€Рµ. Р“Р»Р°Р·Р° СЃР»РёРїР°СЋС‚СЃСЏ, Р»РѕР¶СѓСЃСЊ СЃРїР°С‚СЊ.\""; cin.ignore();
+                        cout << " РќР° РѕР±СЂР°С‚РЅРѕР№ СЃС‚РѕСЂРѕРЅРµ Р»РёСЃС‚РєР° РІРёРґРЅРµРµС‚СЃСЏ Р±РѕР»СЊС€Р°СЏ, СЂР°Р·РјР°С€РёСЃС‚Р°СЏ РЅР°РґРїРёСЃСЊ: ";cin.ignore();
+                        cout << "\"Р­РўРћ Р‘Р«Р›Р РћРљРќРђ\"";cin.ignore();
                     }
                     else {
-                        cout << "Ничего необычного."<<endl;
+                        cout << "РќРёС‡РµРіРѕ РЅРµРѕР±С‹С‡РЅРѕРіРѕ."<<endl;
                     }
                 }
-                else {cout << "Такого предмета нет."<<endl;}
+                else {cout << "РўР°РєРѕРіРѕ РїСЂРµРґРјРµС‚Р° РЅРµС‚."<<endl;}
             }
             //deep_cave part
             if (player.currentLocation == "deep_cave") {
-                if (command=="выйти") {
+                if (command=="РІС‹Р№С‚Рё") {
                     player.currentLocation = "cave";
                 }
-                else if (command == "говорить") {
-                    cout << "Вы произносите: \'Эй, у вас всё порядке?\'"; cin.ignore();
-                    cout<< "Высокый, тощий мужчина подходит к вам"; cin.ignore();
-                    cout << "Вы разглядываете лицо этого человека"; cin.ignore();
-                    cout << "Он явно на грани безумия"; cin.ignore();
-                    cout << "\'Они...  Они там? Ты их в-видел?\' - заикаясь спросил этот мужчина"; cin.ignore();
+                else if (command == "РіРѕРІРѕСЂРёС‚СЊ") {
+                    cout << "Р’С‹ РїСЂРѕРёР·РЅРѕСЃРёС‚Рµ: \'Р­Р№, Сѓ РІР°СЃ РІСЃС‘ РїРѕСЂСЏРґРєРµ?\'"; cin.ignore();
+                    cout<< "Р’С‹СЃРѕРєС‹Р№, С‚РѕС‰РёР№ РјСѓР¶С‡РёРЅР° РїРѕРґС…РѕРґРёС‚ Рє РІР°Рј"; cin.ignore();
+                    cout << "Р’С‹ СЂР°Р·РіР»СЏРґС‹РІР°РµС‚Рµ Р»РёС†Рѕ СЌС‚РѕРіРѕ С‡РµР»РѕРІРµРєР°"; cin.ignore();
+                    cout << "РћРЅ СЏРІРЅРѕ РЅР° РіСЂР°РЅРё Р±РµР·СѓРјРёСЏ"; cin.ignore();
+                    cout << "\'РћРЅРё...  РћРЅРё С‚Р°Рј? РўС‹ РёС… РІ-РІРёРґРµР»?\' - Р·Р°РёРєР°СЏСЃСЊ СЃРїСЂРѕСЃРёР» СЌС‚РѕС‚ РјСѓР¶С‡РёРЅР°"; cin.ignore();
                     string ans;
-                    cout << "1: Да   2: Нет"<<endl;
+                    cout << "1: Р”Р°   2: РќРµС‚"<<endl;
                     cin >> ans;
-                    if (ans == "1" || ans == "Да" || ans == "да") {
-                        cout << "На его лице застыла гримаса ужаса."; cin.ignore();
-                        cout << "Безумец резко толкает тебя и убегает"; cin.ignore();
-                        cout << "Толчок был слабым. Безумца нигде не видно"; cin.ignore();
-                        deep_cave.addItem("листок бумаги");
-                        deep_cave.description = "Здесь почти ничего не видно. Слышен шум капающей воды. Человека в углу больше нет. Он обронил листок бумаги.";
+                    if (ans == "1" || ans == "Р”Р°" || ans == "РґР°") {
+                        cout << "РќР° РµРіРѕ Р»РёС†Рµ Р·Р°СЃС‚С‹Р»Р° РіСЂРёРјР°СЃР° СѓР¶Р°СЃР°."; cin.ignore();
+                        cout << "Р‘РµР·СѓРјРµС† СЂРµР·РєРѕ С‚РѕР»РєР°РµС‚ С‚РµР±СЏ Рё СѓР±РµРіР°РµС‚"; cin.ignore();
+                        cout << "РўРѕР»С‡РѕРє Р±С‹Р» СЃР»Р°Р±С‹Рј. Р‘РµР·СѓРјС†Р° РЅРёРіРґРµ РЅРµ РІРёРґРЅРѕ"; cin.ignore();
+                        deep_cave.addItem("Р»РёСЃС‚РѕРє Р±СѓРјР°РіРё");
+                        deep_cave.description = "Р—РґРµСЃСЊ РїРѕС‡С‚Рё РЅРёС‡РµРіРѕ РЅРµ РІРёРґРЅРѕ. РЎР»С‹С€РµРЅ С€СѓРј РєР°РїР°СЋС‰РµР№ РІРѕРґС‹. Р§РµР»РѕРІРµРєР° РІ СѓРіР»Сѓ Р±РѕР»СЊС€Рµ РЅРµС‚. РћРЅ РѕР±СЂРѕРЅРёР» Р»РёСЃС‚РѕРє Р±СѓРјР°РіРё.";
 
                     }
-                    else if (ans == "2" || ans == "Нет") {
-                        cout << "Напряжение на его лице заметно спало"; cin.ignore();
-                        cout << "\' Они идут за мной. Они меня найдут, Они найдут и тебя. Уходи\' - тихо прошептал мужчина."; cin.ignore();
-                        cout << "Человек снова вжался в угол пещеры и пристально смотрел то на меня, то на проход позади."; cin.ignore();
+                    else if (ans == "2" || ans == "РќРµС‚") {
+                        cout << "РќР°РїСЂСЏР¶РµРЅРёРµ РЅР° РµРіРѕ Р»РёС†Рµ Р·Р°РјРµС‚РЅРѕ СЃРїР°Р»Рѕ"; cin.ignore();
+                        cout << "\' РћРЅРё РёРґСѓС‚ Р·Р° РјРЅРѕР№. РћРЅРё РјРµРЅСЏ РЅР°Р№РґСѓС‚, РћРЅРё РЅР°Р№РґСѓС‚ Рё С‚РµР±СЏ. РЈС…РѕРґРё\' - С‚РёС…Рѕ РїСЂРѕС€РµРїС‚Р°Р» РјСѓР¶С‡РёРЅР°."; cin.ignore();
+                        cout << "Р§РµР»РѕРІРµРє СЃРЅРѕРІР° РІР¶Р°Р»СЃСЏ РІ СѓРіРѕР» РїРµС‰РµСЂС‹ Рё РїСЂРёСЃС‚Р°Р»СЊРЅРѕ СЃРјРѕС‚СЂРµР» С‚Рѕ РЅР° РјРµРЅСЏ, С‚Рѕ РЅР° РїСЂРѕС…РѕРґ РїРѕР·Р°РґРё."; cin.ignore();
 
                         string ans1;
-                        cout << "1.Вы знаете что это за место? 2.Уйти"<<endl;
+                        cout << "1.Р’С‹ Р·РЅР°РµС‚Рµ С‡С‚Рѕ СЌС‚Рѕ Р·Р° РјРµСЃС‚Рѕ? 2.РЈР№С‚Рё"<<endl;
                         cin >> ans1;
                         if (ans1 == "1") {
-                            cout << "\'Гамленская долина\'"; cin.ignore();
+                            cout << "\'Р“Р°РјР»РµРЅСЃРєР°СЏ РґРѕР»РёРЅР°\'"; cin.ignore();
                         }
                         else {
-                            cout <<"Вы вышли обратно в пещеру"<<endl;
+                            cout <<"Р’С‹ РІС‹С€Р»Рё РѕР±СЂР°С‚РЅРѕ РІ РїРµС‰РµСЂСѓ"<<endl;
                             player.currentLocation = "cave";
                         }
                     }
@@ -305,7 +305,7 @@ private:
         Location* loc = getCurrentLocation();
 
         if (loc == nullptr) {
-            cout << "Ошибка!\n";
+            cout << "РћС€РёР±РєР°!\n";
             return;
         }
 
@@ -313,25 +313,25 @@ private:
             string nextLocation = loc->getExit(direction);
             player.currentLocation = nextLocation;
         } else {
-            cout << "Туда нельзя пойти!\n";
+            cout << "РўСѓРґР° РЅРµР»СЊР·СЏ РїРѕР№С‚Рё!\n";
         }
     }
 };
 
-// =============== ГЛАВНАЯ ФУНКЦИЯ ===============
+// =============== Р“Р›РђР’РќРђРЇ Р¤РЈРќРљР¦РРЇ ===============
 int main() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "Russian");
 
     cout<<"========================================="<<endl;
-    cout<<"ДОБРО ПОЖАЛОВАТЬ В ТЕКСТОВЫЙ КВЕСТ"<<endl;
+    cout<<"Р”РћР‘Р Рћ РџРћР–РђР›РћР’РђРўР¬ Р’ РўР•РљРЎРўРћР’Р«Р™ РљР’Р•РЎРў"<<endl;
     cout<<"========================================="<<endl;
     cin.ignore();
     Game game;
-    cout<<"Ты просыпаешься в незнакомом лесу. Голова гудит, одежда порвана.";cin.ignore();
-    cout<<"Последнее, что ты помнишь — яркая вспышка.";cin.ignore();
-    cout<<"Теперь нужно выбраться и понять, что произошло.";cin.ignore();
+    cout<<"РўС‹ РїСЂРѕСЃС‹РїР°РµС€СЊСЃСЏ РІ РЅРµР·РЅР°РєРѕРјРѕРј Р»РµСЃСѓ. Р“РѕР»РѕРІР° РіСѓРґРёС‚, РѕРґРµР¶РґР° РїРѕСЂРІР°РЅР°.";cin.ignore();
+    cout<<"РџРѕСЃР»РµРґРЅРµРµ, С‡С‚Рѕ С‚С‹ РїРѕРјРЅРёС€СЊ вЂ” СЏСЂРєР°СЏ РІСЃРїС‹С€РєР°.";cin.ignore();
+    cout<<"РўРµРїРµСЂСЊ РЅСѓР¶РЅРѕ РІС‹Р±СЂР°С‚СЊСЃСЏ Рё РїРѕРЅСЏС‚СЊ, С‡С‚Рѕ РїСЂРѕРёР·РѕС€Р»Рѕ.";cin.ignore();
 
     game.start();
     return 0;
