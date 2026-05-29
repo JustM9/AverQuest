@@ -3,6 +3,7 @@
 #include <vector>
 #include <windows.h>
 #include <sstream>
+#include <clocale>
 
 using namespace std;
 
@@ -319,8 +320,8 @@ private:
 
 // =============== √À¿¬Õ¿ﬂ ‘”Õ ÷»ﬂ ===============
 int main() {
-    SetConsoleOutputCP(1251);
     SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "Russian");
 
     cout<<"========================================="<<endl;
